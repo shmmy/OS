@@ -1,0 +1,131 @@
+\documentclass[a4paper,10pt]{article} \usepackage{anysize}
+\marginsize{2cm}{2cm}{1cm}{1cm}
+%\textwidth 6.0in \textheight = 664pt
+\usepackage{xltxtra}
+\usepackage{xunicode} \usepackage{graphicx}
+\usepackage{color} \usepackage{xgreek} \usepackage{fancyvrb}
+\usepackage{minted}
+\usepackage{listings}
+\usepackage{enumitem} \usepackage{framed} \usepackage{relsize}
+\usepackage{float} \setmainfont[Mapping=TeX-text]{CMU Serif}
+\begin{document}
+
+\include{title/title}
+
+\section*{} \setcounter{section}{1}
+\subsection{Υλοποίηση σημαφόρων με σωληνώσεις του UNIX} 
+Ο πηγαίος κώδικας της pipesem.c που γράψαμε είναι ο παρακάτω:
+\inputminted[linenos,fontsize=\footnotesize,frame=leftline]{c}{files/pipesem.c}
+
+\newpage
+\emph{Ερωτήσεις}
+\begin{enumerate}
+	\item Στο πρόγραμμα τρέχουν 2 διεργασίες. Η αρχική διεργασία (πατέρας)
+		κάνει fork το παιδί και έπειτα κάνει wait στο σημαφόρο.  Το παιδί,
+		αφού δημιουργηθεί, κάνει sleep για 5 δευτερόλεπτα. Επειτα κάνει signal
+		στο σημαφόρο, ώστε να ξεμπλοκάρει τον πατέρα που περιμένει, και
+		τερματίζει.
+	\item H pipesem.c που γράψαμε, έχει ως βασική αρχή λειτουργίας ότι όταν
+		μια διεργασία (ή νήμα) προσπαθεί να διαβάσει από το read άκρο ενός
+		άδειου pipe μπλοκάρει εκεί μέχρι να βρεθούν δεδομένα προς ανάγνωση.
+		Αντίστοιχα, όταν μια διεργασία εξέλθει από το critical section,
+		τροφοδοτεί το write άκρο του pipe με 1 token (int) ώστε να μπορέσει η
+		επόμενη διεργασία να εισέλθει.
+	\item Θα μπορούσε, μιας και εξαρτάται από το πως το ΛΣ διαχειρίζεται της
+		σωληνώσεις. Στην περίπτωσή μας, γνωρίζοντας ότι το UNIX αντιμετωπίζει
+		τα read requests στο άκρο του pipe ως μία FIFO λίστα, είμαστε σίγουροι
+		ότι δε θα οδηγηθεί καμία διεργασία σε λιμοκτονία.\\
+\end{enumerate}
+
+
+\subsection{Παράλληλος υπολογισμός του συνόλου Mandelbrot} 
+Ο πηγαίος κώδικας παρατίθεται παρακάτω:
+\inputminted[linenos,fontsize=\footnotesize,frame=leftline]{c}{files/mandel.c}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{files/mandel.png}
+	\caption{Screenshot}
+\end{figure}
+
+\emph{Ερωτήσεις}
+\begin{enumerate}
+	\item Χρησιμοποιείται ένας σημαφόρος για κάθε διεργασία, ουσιαστικά ένα
+		κυκλικό σχήμα με διεργασίες και τα pipes που τις ενώνουν.
+	\item Η έξοδος που προέκυψε κατά την εκτέλεση ήταν η εξής, με τους
+		αντίστοιχους χρόνους με και χωρίς παραλληλία (οι χρόνοι προέκυψαν σε
+		μηχάνημα με 4 πυρήνες:\\
+		Mε μία διεργασία:\\
+		\begin{minted}{sh}
+		./mandel  0.69s user 0.01s system 99% cpu 0.705 total
+		\end{minted}
+		Με 30 διεργασίες:\\
+		\begin{minted}{sh}
+		./mandel  0.82s user 0.02s system 332% cpu 0.252 total
+		\end{minted}
+	\item Παρατηρούμε μία βελτίωση της τάξης του 65\% όταν ο υπολογισμός
+		γίνεται παράλληλα. Το κρίσιμο τμήμα αποτελείται μόνο από τη φάση
+		εξόδου, μιας και ο υπολογισμός είναι atomic και δεν επηρρεάζει κάπως
+		τις άλλες διεργασίες ή το τελικό αποτέλεσμα.
+	\item Αν δωθεί interrupt signal (\^\ C), το χρώμα του τερματικού θα
+		παραμείνει στο χρώμα του χαρακτήρα που τυπώθηκε τελευταίος, με
+		συνέπεια να χρειάζεται η εντολή "reset" για να επαναφερθεί στα
+		κανονικά χρώματα. Για να αντιμετωπιστεί αυτό, θα πρέπει στο αρχείο
+		mandel.c να τοποθετήσουμε ένα signal handler, που στην περίπτωση kill
+		ή interrupt signal θα εκτελεί την "reset\_xterm\_color(1)" πρίν
+		τερματίσει.
+\end{enumerate}
+
+\pagebreak
+
+\subsection{Ταυτόχρονη πρόσβαση σε μοιραζόμενους πόρους} 
+Το πρόγραμμα υλοποιήθηκε μόνο με χρήση pipesem\_wait() και pipesem\_signal(),
+όπως ζητήθηκε.
+\noindent Ο πηγαίος κώδικας παρατίθεται παρακάτω:
+
+\inputminted[linenos,fontsize=\footnotesize,frame=leftline]{c}{files/procs-shm.c}
+\newpage
+
+\emph{Ερωτήσεις}
+\begin{enumerate}
+	\item Η create\_shared\_memory\_area(sizeof(int)), όπως δηλώνει και το
+		όνομά της, δημιουργεί ένα χώρο στη μνήμη στον οποίο θα έχουν πρόσβαση
+		και οι 3 διεργασίες.
+	\item Το πρόγραμμά μας καλύπτει τη γενική περίπτωση (Β: n = n - K,  K
+		defined) με ένα επαναληπτικό σχήμα στα pipesem\_signal(semA) και
+		pipesem\_wait(semB).
+\end{enumerate}
+
+\subsection{Προαιρετικές ερωτήσεις (bonus)} 
+
+\begin{enumerate}
+
+	\item To πρόγραμμα αυτό δημιουργεί τόσες διεργασίες όσες του δωθούν σαν
+		όρισμα (ή 10 αν δε δωθεί όρισμα) όπου η κάθε μία τυπώνει το αποτέλεσμα
+		της \emph{rand()}. Πιθανώς να περίμενε κάποιος τα αποτελέσματα να είναι
+		διαφορετικά (λόγω της τυχαιότητας της \emph{rand()}), όμως αυτό δεν ισχύει,
+		γιατί όλες οι διεργασίες χρησιμοποιούν το ίδιο seed για τη γεννήτρια
+		τυχαίων αριθμών και όλες επιστρέφουν το 1ο αποτέλεσμα.  Ένας τρόπος να
+		έχουμε διαφορετικά τυχαία αποτελέσματα είναι πριν την εκτύπωση (δηλαδή
+		αφού έχει δημιουργηθεί το κάθε παιδί), να δώσουμε την εντολή
+		\emph{srand(time(NULL)*i)}, ώστε κάθε παιδί να χρησιμοποιήσει
+		διαφορετικό seed.   
+\end{enumerate}
+
+\subsection{Bonus track: \\Οπτικοποίηση Mandelbrot Set με export σε εικόνα \&
+\\επέκταση παραλληλοποίησης σε πολλαπλούς υπολογιστές (νησιά)}
+\noindent Κυρίως κώδικας:
+
+\inputminted[linenos,fontsize=\footnotesize,frame=leftline]{c}{files/mandel_parallel.c}
+
+\noindent Bash script για την παραλληλοποίηση:
+
+\inputminted[linenos,fontsize=\footnotesize,frame=leftline]{bash}{files/runem.sh}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{files/mandel_parallel.png}
+	\caption{Image Output}
+\end{figure}
+
+
+\end{document}

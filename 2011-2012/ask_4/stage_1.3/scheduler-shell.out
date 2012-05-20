@@ -1,0 +1,278 @@
+My PID = 31303: Child PID = 31305 has been stopped by a signal, signo = 19
+		handlers installed, now running
+		NEXT		id:0
+
+This is the Shell. Welcome.
+
+Shell> 		STOP		id:0
+		NEXT		id:0
+e prog
+Shell: issuing request...
+Shell: receiving request return value...
+Shell> 		SIGSTOP irrelevant
+p
+Shell: issuing request...
+Shell: receiving request return value...
+high priority
+low priority
+sid:	0 pid:	31305 schell
+sid:	1 pid:	31312 prog
+Shell> 		STOP		id:0
+		NEXT		id:1
+prog: Starting, NMSG = 50, delay = 104
+prog[31312]: This is message 0
+prog[31312]: This is message 1
+	...
+prog[31312]: This is message 5
+prog[31312]: This is message 6
+		STOP		id:1
+		NEXT		id:0
+k 1
+Shell: issuing request...
+Shell: receiving request return value...
+DIE DIE DIE!!!!! 1
+Shell> 		NEXT		id:0
+p
+Shell: issuing request...
+Shell: receiving request return value...
+high priority
+low priority
+sid:	0 pid:	31305 schell
+Shell> 		STOP		id:0
+		NEXT		id:0
+e prog
+Shell: issuing request...
+Shell: receiving request return value...
+Shell> 		SIGSTOP irrelevant
+p
+Shell: issuing request...
+Shell: receiving request return value...
+high priority
+low priority
+sid:	0 pid:	31305 schell
+sid:	2 pid:	31332 prog
+Shell> 		STOP		id:0
+		NEXT		id:2
+prog: Starting, NMSG = 50, delay = 60
+prog[31332]: This is message 0
+prog[31332]: This is message 1
+	...
+prog[31332]: This is message 9
+prog[31332]: This is message 10
+		STOP		id:2
+		NEXT		id:0
+e prog
+Shell: issuing request...
+Shell: receiving request return value...
+Shell> p
+Shell: issuing request...
+Shell: receiving request return value...
+high priority
+low priority
+sid:	0 pid:	31305 schell
+sid:	2 pid:	31332 prog
+sid:	3 pid:	31345 prog
+Shell> 		SIGSTOP irrelevant
+h 0
+Shell: issuing request...
+Shell: receiving request return value...
+high tasks only
+Shell> p
+Shell: issuing request...
+Shell: receiving request return value...
+high priority
+sid:	0 pid:	31305 schell
+low priority
+sid:	2 pid:	31332 prog
+sid:	3 pid:	31345 prog
+Shell> 		STOP		id:0
+		NEXT		id:0
+e prog
+Shell: issuing request...
+Shell: receiving request return value...
+Shell> 		SIGSTOP irrelevant
+p
+Shell: issuing request...
+Shell: receiving request return value...
+high priority
+sid:	0 pid:	31305 schell
+low priority
+sid:	2 pid:	31332 prog
+sid:	3 pid:	31345 prog
+sid:	4 pid:	31358 prog
+Shell> 		STOP		id:0
+		NEXT		id:0
+		STOP		id:0
+		NEXT		id:0
+h 2
+Shell: issuing request...
+Shell: receiving request return value...
+Shell> p
+Shell: issuing request...
+Shell: receiving request return value...
+high priority
+sid:	0 pid:	31305 schell
+sid:	2 pid:	31332 prog
+low priority
+sid:	3 pid:	31345 prog
+sid:	4 pid:	31358 prog
+Shell> 		STOP		id:0
+		NEXT		id:2
+prog[31332]: This is message 11
+prog[31332]: This is message 12
+	...
+prog[31332]: This is message 20
+prog[31332]: This is message 21
+		STOP		id:2
+		NEXT		id:0
+k 2
+Shell: issuing request...
+Shell: receiving request return value...
+DIE DIE DIE!!!!! 2
+Shell> 		STOP		id:0
+		NEXT		id:2
+		NEXT		id:0
+p
+Shell: issuing request...
+Shell: receiving request return value...
+high priority
+sid:	0 pid:	31305 schell
+low priority
+sid:	3 pid:	31345 prog
+sid:	4 pid:	31358 prog
+Shell> 		STOP		id:0
+		NEXT		id:0
+l 0
+Shell: issuing request...
+Shell: receiving request return value...
+low tasks allowed
+		SIGSTOP irrelevant
+prog: Starting, NMSG = 50, delay = 81
+prog[31345]: This is message 0
+prog[31345]: This is message 1
+	...
+prog[31345]: This is message 5
+prog[31345]: This is message 6
+		STOP		id:3
+		NEXT		id:4
+prog: Starting, NMSG = 50, delay = 101
+prog[31358]: This is message 0
+prog[31358]: This is message 1
+	...
+prog[31358]: This is message 5
+prog[31358]: This is message 6
+		STOP		id:4
+		NEXT		id:0
+Shell> p
+Shell: issuing request...
+Shell: receiving request return value...
+high priority
+low priority
+sid:	3 pid:	31345 prog
+sid:	4 pid:	31358 prog
+sid:	0 pid:	31305 schell
+Shell> 		STOP		id:0
+		NEXT		id:3
+prog[31345]: This is message 7
+prog[31345]: This is message 8
+	...
+prog[31345]: This is message 13
+prog[31345]: This is message 14
+		STOP		id:3
+		NEXT		id:4
+prog[31358]: This is message 7
+prog[31358]: This is message 8
+	...
+prog[31358]: This is message 12
+prog[31358]: This is message 13
+		STOP		id:4
+		NEXT		id:0
+h 4
+Shell: issuing request...
+Shell: receiving request return value...
+high tasks only
+		SIGSTOP irrelevant
+prog[31358]: This is message 14
+prog[31358]: This is message 15
+	...
+prog[31358]: This is message 18
+prog[31358]: This is message 19
+		STOP		id:4
+		NEXT		id:4
+prog[31358]: This is message 20
+prog[31358]: This is message 21
+	...
+prog[31358]: This is message 25
+prog[31358]: This is message 26
+		STOP		id:4
+		NEXT		id:4
+prog[31358]: This is message 27
+prog[31358]: This is message 28
+	...
+prog[31358]: This is message 31
+prog[31358]: This is message 32
+		STOP		id:4
+		NEXT		id:4
+prog[31358]: This is message 33
+prog[31358]: This is message 34
+	...
+prog[31358]: This is message 38
+prog[31358]: This is message 39
+		STOP		id:4
+		NEXT		id:4
+prog[31358]: This is message 40
+prog[31358]: This is message 41
+	...
+prog[31358]: This is message 44
+prog[31358]: This is message 45
+		STOP		id:4
+		NEXT		id:4
+prog[31358]: This is message 46
+prog[31358]: This is message 47
+prog[31358]: This is message 48
+prog[31358]: This is message 49
+		DEAD		id:4
+low tasks allowed
+		NEXT		id:0
+Shell> p
+Shell: issuing request...
+Shell: receiving request return value...
+high priority
+low priority
+sid:	0 pid:	31305 schell
+sid:	3 pid:	31345 prog
+Shell> 		STOP		id:0
+		NEXT		id:3
+prog[31345]: This is message 15
+prog[31345]: This is message 16
+	...
+prog[31345]: This is message 22
+prog[31345]: This is message 23
+		STOP		id:3
+		NEXT		id:0
+		STOP		id:0
+		NEXT		id:3
+prog[31345]: This is message 24
+prog[31345]: This is message 25
+	...
+prog[31345]: This is message 30
+prog[31345]: This is message 31
+		STOP		id:3
+		NEXT		id:0
+k 3
+Shell: issuing request...
+Shell: receiving request return value...
+DIE DIE DIE!!!!! 3
+Shell> 		NEXT		id:0
+p
+Shell: issuing request...
+Shell: receiving request return value...
+high priority
+low priority
+sid:	0 pid:	31305 schell
+		STOP		id:0
+		NEXT		id:0
+Shell> q
+Shell: Exiting. Goodbye.
+		DEAD		id:0
+		both queues are empty

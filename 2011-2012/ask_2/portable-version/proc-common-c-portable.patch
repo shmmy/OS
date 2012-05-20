@@ -1,0 +1,79 @@
+--- ../forktree/proc-common.c	2011-12-10 23:43:20.000000000 +0200
++++ proc-common.c	2011-12-22 11:46:32.000000000 +0200
+@@ -3,10 +3,46 @@
+ #include <unistd.h>
+ #include <assert.h>
+ #include <string.h>
+-#include <sys/prctl.h>
+ #include <sys/wait.h>
+ 
+ #include "proc-common.h"
++//Using Operating Systems Predefined Macros
++//as defined in [1]
++//[1] http://sourceforge.net/apps/mediawiki/predef/index.php?title=Operating_Systems
++#ifdef __linux__
++#include <sys/prctl.h>
++void
++change_pname(const char *new_name)
++{
++	int ret;
++	ret = prctl(PR_SET_NAME, new_name);
++	if (ret == -1){
++		perror("prctl set_name");
++		exit(1);
++	}
++}
++#elif __FreeBSD__ || __NetBSD__ || __OpenBSD__ || __bsdi__ || __DragonFly__   //assuming BSD
++void
++change_pname(const char *new_name)
++{
++    setproctitle("%s",new_name);
++
++}
++#elif __APPLE__
++extern char ***_NSGetArgv();
++void
++change_pname(const char *new_name)
++{
++    //http://unixjunkie.blogspot.com/2006/07/access-argc-and-argv-from-anywhere.html
++    //uses this _NSGetArgv : tested & working!
++    char **argv = *_NSGetArgv();
++    unsigned int old_len=strlen(argv[0]);
++    //snprintf(argv[0],old_len+1,"%s ",new_name);
++    strncpy(argv[0],new_name,old_len);
++    if (old_len > 0)
++        argv[0][old_len] = '\0';
++}
++#endif
+ 
+ void
+ wait_forever(void)
+@@ -20,16 +56,6 @@
+  * Changes the process name, as appears in ps or pstree,
+  * using a Linux-specific system call.
+  */
+-void
+-change_pname(const char *new_name)
+-{
+-	int ret;
+-	ret = prctl(PR_SET_NAME, new_name);
+-	if (ret == -1){
+-		perror("prctl set_name");
+-		exit(1);
+-	}
+-}
+ 
+ /*
+  * This function receives an integer status value,
+@@ -99,7 +125,11 @@
+ 	int ret;
+ 	char cmd[1024];
+ 
++#ifdef __linux__
+ 	snprintf(cmd, sizeof(cmd), "echo; echo; pstree -G -c -p %ld; echo; echo",
++#elif __FreeBSD__ || __NetBSD__ || __OpenBSD__ || __bsdi__ || __DragonFly__  || __APPLE__ //assuming BSD or macosx
++	snprintf(cmd, sizeof(cmd), "echo; echo; pstree -g -c -p %ld; echo; echo",
++#endif
+ 		(long)p);
+ 	cmd[sizeof(cmd)-1] = '\0';
+ 	ret = system(cmd);

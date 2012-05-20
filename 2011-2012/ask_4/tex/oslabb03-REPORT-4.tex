@@ -1,0 +1,145 @@
+\documentclass[a4paper,10pt]{article} \usepackage{anysize}
+\marginsize{2cm}{2cm}{1cm}{1cm}
+%\textwidth 6.0in \textheight = 664pt
+\usepackage{xltxtra}
+\usepackage{xunicode}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage{xgreek}
+\usepackage{fancyvrb}
+\usepackage{minted}
+\usepackage{listings}
+\usepackage{enumitem} \usepackage{framed} \usepackage{relsize}
+\usepackage{float} \setmainfont[Mapping=TeX-text]{FreeSerif}
+\begin{document}
+
+\renewcommand{\theenumi}{\roman{enumi}}
+\include{title/title}
+\section*{Ερωτήσεις}
+\setcounter{section}{3}
+\subsection{Άσκηση 1.1}
+\subsubsection{}
+Στην περίπτωση που έρθει ένα σήμα κατά την εκτέλεση της ρουτίνας ενός signal
+handler, αυτό αγνοείται προσωρινά, αφού γίνονται masked όταν ένας από τους 2
+τρέχει. Στο χρονοδρομολογητή χώρου πυρήνα οι αλλαγές γίνονται μέσα στον χώρο
+του πυρήνα, οπότε τα σήματα που καταφτάνουν αυτόματα αναστέλλονται μέχρι να
+επιστραφεί ο χειρισμός στο χώρο χρήστη.
+\subsubsection{}
+Τα SIGCHLD συνήθως προέρχονται από running παιδιά που δέχονται SIGSTOP από τον
+scheduler όταν τελειώσει το κβάντο χρόνου τους (οπότε φέρνουμε για εκτέλεση
+την επόμενη διεργασία) ή SIGCONT (όταν μια ready διεργασία επιλεγεί για
+εκτέλεση, που το αγνοούμε). Επίσης έρχεται 1 σήμα SIGCHLD (κατα τη δημιουργία
+μιας διεργασίας, όπου κάνει raise SIGSTOP στον εαυτό της) και 1 όταν κάνει
+έξοδο.
+
+Αν αλλάξει το status μιας διεργασίας-παιδί θα σταλεί SIGCHLD στον scheduler.
+Στον signal handler του SIGCHLD, ελέγχουμε το αντίστοιχο macro για το
+status (WIFEXITED, WIFSTOPPED, WIFCONTINUED, WIFSIGNALED) που πήραμε από τη
+wait(pid), και δρούμε ανάλογα (harvest \& αφαίρεση από την ουρά αν χρειαστεί).
+\subsubsection{}
+Μια διεργασία έχει τη δυνατότητα να πιάσει το σήμα SIGSTΟP. Αν συμβεί αυτό,
+ένας scheduler που χρησιμοποιεί μόνο SIGALRM και δεν ελέγχει αν η διεργασία
+που προσπαθεί να σταματήσει όντως σταμάτησε, είναι δυνατόν να φτάσει σε
+κατάσταση όπου περισσότερες από μία διεργασίες προσπαθούν να τρέξουν. Επίσης
+το SIGCHLD χρησιμοποιείται για να ειδοποιηθεί ο scheduler σε περίπτωση που
+κάποιο παιδί του πεθάνει (από κάποιο σήμα είτε από κανονική έξοδο).
+
+\subsection{Άσκηση 1.2}
+\subsubsection{}
+Εμφανίζεται σχεδόν πάντα ο φλοιός ως current\_proc, αφού προκειμένου να
+εκτελέσει τις εντολές που του δώθηκαν (μαζί και την 'p'), πρέπει να είναι
+running. Ο λόγος που συμβαίνει αυτό είναι ότι οι εντολές του εκτελούνται
+μέσα στο κβαντο χρόνου που του αντιστοιχεί. Υπάρχει μια απειροελάχιστη
+πιθανότητα (αφού η επικοινωνία shell - scheduler γίνεται με χρήση pipes), το
+shell να γράψει στο pipe και να εκπνεύσει αμέσως μετά το κβάντο χρόνου του,
+επομένως θα εμφανιστεί η επόμενη διεργασία.
+\subsubsection{}
+Αν δε γινόταν απενεργοποιήση των σημάτων πριν την υλοποίηση των συναρτήσεων
+του φλοιού θα ήταν πιθανό να έρθει ένα σήμα που θα μεταβάλει την κατάσταση της
+ουράς εκτέλεσης την ώρα που ο φλοιός (για παράδειγμα) διέγραφε μια διεργασία.
+Αυτό το race condition μπορούσε να προκαλέσει σφάλματα όπως διαγραφή λάθος
+διεργασίας, ή (χειρότερα) κατάρρευση της ουράς με λάθος ανάθεση των pointers
+στις επόμενες διεργασίες.
+
+\subsection{Άσκηση 1.3}
+\subsubsection{}
+Θα ήταν δυνατόν να λιμοκτονήσει μια low\_priority διεργασία αν συνεχώς
+δημιουργούσαμε και θέταμε ως high priority διεργασίες. Αφού η λίστα των υψηλής
+προτεραιότητας διεργασιών θα είχε πάντα στοιχεία, ο χρονοδρομολογητής δε θα
+επέλεγε ποτε τις διεργασίες με χαμηλή προτεραιότητα.
+
+\section*{Προαιρετικές Ερωτήσεις}
+\setcounter{section}{4}
+\setcounter{subsection}{0}
+\subsection{}
+Η επικοινωνία γίνεται με τη χρήση σωληνώσεων (pipes). Ο πατέρας (scheduler)
+περιμένει στο άκρο ανάγνωσης του pipe του παιδιού για να λάβει κάποια αίτηση
+(request) όπως αυτή ορίζεται στο request.h. Όταν τη λάβει, απενεργοποιεί τα σήματα,
+και την εξυπηρετεί. Στη συνέχεια ενεργοποιεί και πάλι τα σήματα και γράφει στο άκρο
+εγγραφής του δικού του pipe. Στην άλλη μεριά το shell περιμένει στο άκρο
+ανάγνωσης του pipe του πατέρα για να λάβει την απόκριση του scheduler.
+Αφού τη λάβει συνεχίζει κανονικά τη λειτουργία του.
+
+\subsection{}
+Θα ήταν δυνατόν να διατηρείται στη λίστα με τις low\_priority διεργασίες ένας
+counter που θα δείχνει πόσα κβάντα χρόνου έχουν περάσει από την δημιουργία
+τους, ενώ υπάρχουν high\_priority διεργασίες. Ο counter αυτός θα αυξανόταν μέσα
+στον SIGALRM handler (δίνοντας βέβαια αρκετή καθυστέρηση στο πρόγραμμα). Όταν
+μία διεργασία έφτανε ένα προκαθορισμένο αριθμό στον counter, θα ανέβαινε σε
+high\_priority ώστε να αρχίζει να εκτελείται.
+\subsection{}
+Το πρόβλήμα είναι ότι η L μένει μέσα στο critical section, αφού έχει μηδενίσει
+το σημαφόρο. Όταν δημιουργηθούν οι Μ και H, η L δεν τρέχει λόγω
+προτεραιότητας. Η H θα μπλοκάρει στον άδειο σημαφόρο και θα βγεί από την ουρά
+εκτέλεσης των διεργασιών και θα τρέξει η M που κάνει infinite loop. Έτσι, το
+σύστημα έχει μπλοκάρει σε μια κατάσταση όπου η L δεν μπορεί να τρέξει για να
+απελευθερώσει το σημαφόρο, με αποτέλεσμα να κάνει μόνιμο wait η H σε αυτόν και
+τρέχει μόνο η M.
+
+Υπάρχουν διάφοροι τρόποι αντιμετώπισης αυτού του συμβάντος
+\begin{itemize}
+\item Θα μπορούσαμε να χρησιμοποιήσουμε ένα μηχανισμό γήρανσης, όπως
+αναφέρεται στο παραπάνω υποερώτημα. Με τον τρόπο αυτό η L θα έπαιρνε κάποια
+στιγμή χρόνο εκτέλεσης και θα απελευθέρωνε το σημαφόρο, ξεμπλοκάρωντας το
+σύστημα.
+\item Τέλος, μπορεί να αποθηκεύονται κάπου οι διεργασίες που βρίσκονται μέσα
+σε critical sections και να τους δίνεται χρόνος εκτέλεσης κάθε x time
+quantums, ανεξάρτητα με την προτεραιότητά τους, δίνοντάς τους έτσι χρόνο να
+εξέλθουν από εκεί.
+
+\end{itemize}
+
+\vspace{1cm}
+\def\thesubsection {Άσκηση \arabic{section}.\arabic{subsection}}
+\section*{Πηγαίος κώδικας ασκήσεων}
+\emph{Κοινή βιβλιοθήκη για διαχείρηση διπλά συνδεδεμένης, κυκλικής λίστας}
+\inputminted[linenos,fontsize=\footnotesize,frame=leftline]{c}{files/queue.h}
+\inputminted[linenos,fontsize=\footnotesize,frame=leftline]{c}{files/queue.c}
+\setcounter{section}{1}
+\setcounter{subsection}{0}
+\subsection{}
+\inputminted[linenos,fontsize=\footnotesize,frame=leftline]{c}{files/scheduler_1.1.c}
+\subsection{}
+\inputminted[linenos,fontsize=\footnotesize,frame=leftline]{c}{files/scheduler-shell_1.2.c}
+\subsection{}
+\inputminted[linenos,fontsize=\footnotesize,frame=leftline]{c}{files/scheduler-shell_1.3.c}
+
+\section*{Παραδείγματα εκτέλεσης των προγραμμάτων}
+\def\thesubsection {Πρόγραμμα \arabic{section}.\arabic{subsection}:}
+\setcounter{subsection}{0}
+\subsection{Scheduler}
+\lstset{emph={PID, NMSG, delay, id, Shell},emphstyle=\color{blue}}
+\lstset{emph={[2]SIREN, DEAD, DIE},emphstyle={[2]\color{BurntOrange}}}
+\lstset{emph={[3]STOP},emphstyle={[3]\color{red}}}
+\lstset{emph={[4]NEXT, NEEEEEEEEEEXT},emphstyle={[4]\color{ForestGreen}}}
+\lstinputlisting[numbers=left,numberstyle=\tiny,basicstyle=\footnotesize\ttfamily,breaklines=true]{files/scheduler_1.1.out}
+%\inputminted[linenos,fontsize=\footnotesize,frame=leftline]{bash}{files/scheduler_1.1.out}
+\subsection{Scheduler with shell}
+\lstinputlisting[numbers=left,numberstyle=\tiny,basicstyle=\footnotesize\ttfamily,breaklines=true]{files/scheduler-shell_1.2.out}
+%\inputminted[linenos,fontsize=\footnotesize,frame=leftline]{bash}{files/scheduler-shell_1.2.out}
+\subsection{Scheduler with shell \& priorities}
+\lstinputlisting[numbers=left,numberstyle=\tiny,basicstyle=\footnotesize\ttfamily,breaklines=true]{files/scheduler-shell_1.3.out}
+%\inputminted[linenos,fontsize=\footnotesize,frame=leftline]{bash}{files/scheduler-shell_1.3.out}
+
+\end{document}

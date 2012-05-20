@@ -1,0 +1,10 @@
+--- ../forktree/tree.c	2011-12-15 11:50:05.223781582 +0200
++++ tree.c	2011-12-21 20:38:24.601947719 +0200
+@@ -3,7 +3,6 @@
+ #include <unistd.h>
+ #include <assert.h>
+ #include <string.h>
+-#include <sys/prctl.h>
+ #include <sys/wait.h>
+ 
+ #include "tree.h"

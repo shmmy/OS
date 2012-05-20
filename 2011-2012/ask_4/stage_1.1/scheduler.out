@@ -1,0 +1,136 @@
+My PID = 13925: Child PID = 13929 has been stopped by a signal, signo = 19
+My PID = 13925: Child PID = 13927 has been stopped by a signal, signo = 19
+My PID = 13925: Child PID = 13928 has been stopped by a signal, signo = 19
+CONTINUED nothing to do
+prog: Starting, NMSG = 50, delay = 112
+prog[13927]: This is message 0
+prog[13927]: This is message 1
+prog[13927]: This is message 2
+prog[13927]: This is message 3
+prog[13927]: This is message 4
+prog[13927]: This is message 5
+SIREN { ( < | > ) }
+NEEEEEEEEEEXT
+prog: Starting, NMSG = 50, delay = 159
+prog[13928]: This is message 0
+CONTINUED nothing to do
+prog[13928]: This is message 1
+prog[13928]: This is message 2
+prog[13928]: This is message 3
+prog[13928]: This is message 4
+SIREN { ( < | > ) }
+NEEEEEEEEEEXT
+CONTINUED nothing to do
+prog: Starting, NMSG = 50, delay = 75
+prog[13929]: This is message 0
+prog[13929]: This is message 1
+prog[13929]: This is message 2
+prog[13929]: This is message 3
+prog[13929]: This is message 4
+prog[13929]: This is message 5
+prog[13929]: This is message 6
+prog[13929]: This is message 7
+prog[13929]: This is message 8
+SIREN { ( < | > ) }
+NEEEEEEEEEEXT
+CONTINUED nothing to do
+prog[13927]: This is message 6
+prog[13927]: This is message 7
+prog[13927]: This is message 8
+prog[13927]: This is message 9
+prog[13927]: This is message 10
+prog[13927]: This is message 11
+SIREN { ( < | > ) }
+NEEEEEEEEEEXT
+CONTINUED nothing to do
+prog[13928]: This is message 5
+prog[13928]: This is message 6
+prog[13928]: This is message 7
+prog[13928]: This is message 8
+SIREN { ( < | > ) }
+NEEEEEEEEEEXT
+CONTINUED nothing to do
+prog[13929]: This is message 9
+prog[13929]: This is message 10
+prog[13929]: This is message 11
+prog[13929]: This is message 12
+prog[13929]: This is message 13
+prog[13929]: This is message 14
+prog[13929]: This is message 15
+prog[13929]: This is message 16
+prog[13929]: This is message 17
+........
+........
+........
+SIREN { ( < | > ) }
+NEEEEEEEEEEXT
+CONTINUED nothing to do
+prog[13929]: This is message 45
+prog[13929]: This is message 46
+prog[13929]: This is message 47
+prog[13929]: This is message 48
+prog[13929]: This is message 49
+i just died in your arms tonight
+CONTINUED nothing to do
+prog[13927]: This is message 36
+prog[13927]: This is message 37
+prog[13927]: This is message 38
+prog[13927]: This is message 39
+prog[13927]: This is message 40
+prog[13927]: This is message 41
+SIREN { ( < | > ) }
+NEEEEEEEEEEXT
+CONTINUED nothing to do
+prog[13928]: This is message 26
+prog[13928]: This is message 27
+prog[13928]: This is message 28
+prog[13928]: This is message 29
+SIREN { ( < | > ) }
+NEEEEEEEEEEXT
+CONTINUED nothing to do
+prog[13927]: This is message 42
+prog[13927]: This is message 43
+prog[13927]: This is message 44
+prog[13927]: This is message 45
+prog[13927]: This is message 46
+prog[13927]: This is message 47
+SIREN { ( < | > ) }
+NEEEEEEEEEEXT
+CONTINUED nothing to do
+prog[13928]: This is message 30
+prog[13928]: This is message 31
+prog[13928]: This is message 32
+prog[13928]: This is message 33
+SIREN { ( < | > ) }
+NEEEEEEEEEEXT
+CONTINUED nothing to do
+prog[13927]: This is message 48
+prog[13927]: This is message 49
+i just died in your arms tonight
+CONTINUED nothing to do
+prog[13928]: This is message 34
+prog[13928]: This is message 35
+prog[13928]: This is message 36
+prog[13928]: This is message 37
+SIREN { ( < | > ) }
+NEEEEEEEEEEXT
+CONTINUED nothing to do
+prog[13928]: This is message 38
+prog[13928]: This is message 39
+prog[13928]: This is message 40
+prog[13928]: This is message 41
+SIREN { ( < | > ) }
+NEEEEEEEEEEXT
+CONTINUED nothing to do
+prog[13928]: This is message 42
+prog[13928]: This is message 43
+prog[13928]: This is message 44
+prog[13928]: This is message 45
+prog[13928]: This is message 46
+SIREN { ( < | > ) }
+NEEEEEEEEEEXT
+CONTINUED nothing to do
+prog[13928]: This is message 47
+prog[13928]: This is message 48
+prog[13928]: This is message 49
+no more tasks

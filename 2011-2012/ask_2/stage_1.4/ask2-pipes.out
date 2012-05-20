@@ -1,0 +1,41 @@
+
+ Expression tree to calculate:
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
++
+	10
+	*
+		+
+			5
+			7
+		4
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+10 said 10
+10: Exiting...
+4 said 4
+4: Exiting...
+7 said 7
+7: Exiting...
+My PID = 434: Child PID = 437 terminated normally, exit status = 0
+5 said 5
+5: Exiting...
+My PID = 434: Child PID = 436 terminated normally, exit status = 0
++: 	 I read 5
++: 	 I read 7
++ said 12
++: Exiting...
+My PID = 433: Child PID = 435 terminated normally, exit status = 0
+My PID = 433: Child PID = 434 terminated normally, exit status = 0
+*: 	 I read 12
+*: 	 I read 4
+* said 48
+*: Exiting...
+My PID = 431: Child PID = 432 terminated normally, exit status = 0
+My PID = 431: Child PID = 433 terminated normally, exit status = 0
++: 	 I read 10
++: 	 I read 48
++ said 58
++: Exiting...
+My PID = 430: Child PID = 431 terminated normally, exit status = 0
+
+The answer is 58

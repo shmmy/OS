@@ -1,0 +1,10 @@
+Dump of assembler code for function main:
+   0x08048424 <+0>:	push   %ebp
+   0x08048425 <+1>:	mov    %esp,%ebp
+   0x08048427 <+3>:	and    $0xfffffff0,%esp
+   0x0804842a <+6>:	call   0x8048438 <zing>
+   0x0804842f <+11>:	mov    $0x0,%eax
+   0x08048434 <+16>:	mov    %ebp,%esp
+   0x08048436 <+18>:	pop    %ebp
+   0x08048437 <+19>:	ret    
+End of assembler dump.

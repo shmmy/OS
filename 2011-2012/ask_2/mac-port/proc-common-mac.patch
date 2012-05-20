@@ -1,0 +1,12 @@
+6d5
+< #include <sys/prctl.h>
+26,27c25,26
+< 	int ret;
+< 	ret = prctl(PR_SET_NAME, new_name);
+---
+> 	int ret=0;
+> 	//ret = prctl(PR_SET_NAME, new_name);
+102c101
+< 	snprintf(cmd, sizeof(cmd), "echo; echo; pstree -G -c -p %ld; echo; echo",
+---
+> 	snprintf(cmd, sizeof(cmd), "echo; echo; pstree -g -c -p %ld; echo; echo",
