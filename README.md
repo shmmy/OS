@@ -7,7 +7,7 @@ Operating Systems Course for NTUA.
 
 (The MIT License)
 
-Copyright (c) 2011 Vasilis "indorilftw" Gerakaris, Gregory "mastergreg" Liras
+Copyright (c) 2011 shmmy
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
